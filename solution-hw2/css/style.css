@@ -209,9 +209,19 @@ hr.bold{
 }
 
 /*-------------------*/
-.cart-item-card{
-    text-align: center;
+.cart-items{
+    margin-left:400px;
+    margin-right: 100px;
 }
+
+.cart-item-card{
+    text-align: left;
+}
+
+.cart-item-card .row{
+    display:flex;
+}
+
 
 .cart-item-card img{
     width: 200px;
@@ -220,17 +230,40 @@ hr.bold{
     margin-bottom: 15px;
 }
 
+.cart-item-card .info{
+    margin-left:60px;
+}
+.cart-item-card .price{
+    display: flex;
+    align-items: center;
+    text-align:right;
+    margin-right: 0px;
+    margin-left:auto;
+}
+
 button.remove-btn{
     border:none;
     background-color:transparent;
-    font-size:18px;
+    font-size:22px;
     font-weight:bold;
     text-decoration: underline;
+    text-align:left;
 }
+
 .checkout{
-    text-align: center;
+    /*text-align: right;*/
+    padding-left:266px;
+
 }
-.checkout button{
+.checkout .total{
+     display: flex; 
+     margin-bottom: 10px;
+}
+
+.checkout-btn{
+    text-align: right;
+}
+.checkout-btn button{
     background-color: yellow;
     border: 2px solid black;
     border-width:thin;
@@ -238,5 +271,7 @@ button.remove-btn{
     font-weight: bold;
     padding: 15px 15px 15px 15px ;
     cursor: pointer;
+
+    
     
 }
