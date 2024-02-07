@@ -41,8 +41,22 @@ a { /* no styling, unless specified later */
 
 .navbar .tab{
     margin:10px 40px 10px 40px ;
+    position: relative;
+}
 
+.cart-oval{
+    height: 24px;
+    width: 22px;
+    background-color: red;
+    border-radius: 50%;
     
+    font-size: 20px;
+    color:white;
+    position: absolute; /* Position the badge within the relatively positioned button */
+    bottom: 10px;
+    left:75px;
+    padding-top:6px;
+    padding-bottom:5px;
 }
 
 .page-title{
