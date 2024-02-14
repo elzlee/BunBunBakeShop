@@ -76,7 +76,7 @@ function glazingChange(selectElement, rollnum) {
     console.log(thisRoll.glazing);
     console.log(thisRoll.glazingPriceAdaptation);
     console.log(thisRoll.adjustedPrice);
-    document.getElementById("adjustedPriceShown").innerHTML = thisRoll.adjustedPrice;
+    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
   
 }
 
@@ -90,7 +90,7 @@ function sizeChange(selectElement, rollnum) {
     console.log(thisRoll.size);
     console.log(thisRoll.sizePriceAdaptation);
     console.log(thisRoll.adjustedPrice);
-    document.getElementById("adjustedPriceShown").innerHTML = thisRoll.adjustedPrice;
+    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
   
 }
 
