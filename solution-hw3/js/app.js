@@ -72,7 +72,7 @@ function glazingChange(selectElement, rollnum) {
     thisRoll.glazingPriceAdaptation = parseFloat(selectElement.value);
     let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
                             * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = Math.round((adjustedPrice + Number.EPSILON) * 100) / 100; 
+    thisRoll.adjustedPrice = (Math.round(adjustedPrice * 100) / 100).toFixed(2); 
     console.log(thisRoll.glazing);
     console.log(thisRoll.glazingPriceAdaptation);
     console.log(thisRoll.adjustedPrice);
@@ -86,7 +86,7 @@ function sizeChange(selectElement, rollnum) {
     thisRoll.sizePriceAdaptation = parseFloat(selectElement.value);
     let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
                             * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = Math.round((adjustedPrice+ Number.EPSILON)*100)/100;
+    thisRoll.adjustedPrice = (Math.round(adjustedPrice*100)/100).toFixed(2);
     console.log(thisRoll.size);
     console.log(thisRoll.sizePriceAdaptation);
     console.log(thisRoll.adjustedPrice);
