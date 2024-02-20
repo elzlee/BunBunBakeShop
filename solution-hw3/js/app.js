@@ -1,4 +1,4 @@
-/* (1) Create a Roll object that stores its type, price, glazing and packSize options. 
+/* (1) Create a Roll object that stores its type, price, glazing and pack options. 
 price = current price, could be updated */
 
 
@@ -11,8 +11,6 @@ class Roll {
         this.size = size;
         this.sizePriceAdaptation = size;
         this.adjustedPrice = basePrice;
-
-        /*this.element = document.querySelector(elementID); */
     }
 }
 /* initializing the Rolls */
@@ -26,44 +24,44 @@ const roll6 = new Roll ("strawberryRoll", 2.49, "keeporiginal", 1);
 const rolls = [roll1, roll2, roll3, roll4, roll5, roll6];
 
 
-/* (2) Add JavaScript objects to represent price adaptations based on user selections. 
-They are listed below. You may hard-code these objects */
-class Glazing {
-    constructor (option, priceAdaptation){
-        this.option = option;
-        this.priceAdaptation = priceAdaptation;
-    }
+/* (2) Add JavaScript objects to represent price adaptations based on user selections. */
+const glazingPrices = {
+    "Keep Original": 0.0,
+    "Sugar Milk": 0.0,
+    "Vanilla Milk": 0.50,
+    "Double Chocolate": 1.50,
+};
+  
+const packPrices = {
+    1: 1,
+    3: 3,
+    6: 5,
+    12: 10,
+};
+
+
+/* (3.1) Populate glazing options with corresponding price adaptation values */
+const glazingSelect = document.querySelector("select#glazing-options");
+
+for (const [glazingOption, priceAdaptation] of Object.entries(glazingPrices)) {
+  const option = document.createElement("option");
+  option.textContent = glazingOption;
+  option.value = priceAdaptation;
+  glazingSelect.appendChild(option);
+  /* appendChild: adds a node to the end of the list of children 
+                  of a specified parent node.*/
 }
-const glazing1 = new Glazing('Keep Original', 0)
-const glazing2 = ('Sugar Milk', 0)
-const glazing3 = ('Vanilla Milk', 0.50)
-const glazing4 = ('Double Chocolate', 1.50)
 
-class PackSize {
-    constructor (option, priceAdaptation){
-        this.option = option;
-        this.priceAdaptation = priceAdaptation;
-    }
+/* (3.2) Populate pack options with corresponding price adaptation values */
+const packSelect = document.querySelector("select#pack-options");
+
+for (const [packOption, priceAdaptation] of Object.entries(packPrices)) {
+  const option = document.createElement("option");
+  option.textContent = packOption;
+  option.value = priceAdaptation;
+  packSelect.appendChild(option);
 }
-const packsize1 = (1, 1)
-const packsize3 = (3, 3)
-const packsize6 = (6, 5)
-const packsize12 = (12, 10)
 
-const glazingList = [glazing1, glazing2, glazing3, glazing4];
-const packsizeList = [packsize1, packsize3, packsize6, packsize12]
-
-
-
-
-
-
-function glazingChange(element) {
-// get value of selected glazing option
-const priceChange = element.value;
-
-// add your code to do update the price ...
-}
 
 /* (4) Compute new price */
 function glazingChange(selectElement, rollnum) {
@@ -80,7 +78,7 @@ function glazingChange(selectElement, rollnum) {
   
 }
 
-function sizeChange(selectElement, rollnum) {
+function packChange(selectElement, rollnum) {
     let thisRoll=rolls[rollnum-1]; /* for when there are multiple detail pages */
     thisRoll.size = selectElement.options[selectElement.selectedIndex].text;
     thisRoll.sizePriceAdaptation = parseFloat(selectElement.value);
