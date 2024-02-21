@@ -126,7 +126,6 @@ function addToCart() {
     let bp = rolls[chosenRoll].basePrice;
     // glazingOption and packOption are global variables updated by the
     // glazingChange and packChange functions.
-    console.log("bannertext"+bannerText);
     let instance = new Roll(bannerText, glazingOption, packOption, bp);
     cart.push(instance);
 
