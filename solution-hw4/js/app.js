@@ -33,6 +33,12 @@ const roll6 = new Roll ("strawberryRoll", 2.49, "keeporiginal", 1);
 
 const oldRollsArr = [roll1, roll2, roll3, roll4, roll5, roll6];
 
+/* Setting some default values */
+let basePrice = 2.49;
+let glazingOption = "Keep original";
+let packOption = 1;
+let glazingPrice = 0;
+let packPrice = 1;
 
 /* (2) Add JavaScript objects to represent price adaptations based on user selections. */
 const glazingPrices = {
@@ -55,7 +61,7 @@ const glazingSelect = document.getElementById("glazing-options");
 
 for (const [glazingOption, priceAdaptation] of Object.entries(glazingPrices)) {
   const option = document.createElement("option");
-  console.log("opption="+option)
+  console.log("option="+option)
   option.textContent = glazingOption;
   option.value = priceAdaptation;
   console.log("glazingSelect=" + glazingSelect)
@@ -75,36 +81,6 @@ for (const [packOption, priceAdaptation] of Object.entries(packPrices)) {
 }
 
 
-/* (4) Compute new price */
-function glazingChange(selectElement, rollnum) {
-    let thisRoll=oldRollsArr[rollnum-1]; /* for when there are multiple detail pages */
-    thisRoll.glazing = selectElement.options[selectElement.selectedIndex].text;
-    thisRoll.glazingPriceAdaptation = parseFloat(selectElement.value);
-    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
-                            * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = (Math.round(adjustedPrice * 100) / 100).toFixed(2); 
-    console.log(thisRoll.glazing);
-    console.log(thisRoll.glazingPriceAdaptation);
-    console.log(thisRoll.adjustedPrice);
-    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
-  
-}
-
-function packChange(selectElement, rollnum) {
-    let thisRoll=oldRollsArr[rollnum-1]; /* for when there are multiple detail pages */
-    thisRoll.size = selectElement.options[selectElement.selectedIndex].text;
-    thisRoll.sizePriceAdaptation = parseFloat(selectElement.value);
-    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
-                            * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = (Math.round(adjustedPrice*100)/100).toFixed(2);
-    console.log(thisRoll.size);
-    console.log(thisRoll.sizePriceAdaptation);
-    console.log(thisRoll.adjustedPrice);
-    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
-  
-}
-/* ------------------------ CART -------------------------- */
-const cart = [];
 
 
 /* ------------------------ URL SEARCH PARAMS -------------------------- */
@@ -132,3 +108,54 @@ imgHTML.src = "images/products/" + rolls[chosenRoll]["imageFile"];
 const priceHTML = document.querySelector('#adjustedPriceShown');
 priceHTML.innertext = "$" + rolls[chosenRoll].basePrice;
 
+/* ------------------------ COMPUTE UPDATED PRICE -------------------------- */
+/*
+function glazingChange(selectElement, chosenRoll) {
+    let thisRoll=oldRollsArr[rollnum-1]; 
+    thisRoll.glazing = selectElement.options[selectElement.selectedIndex].text;
+    thisRoll.glazingPriceAdaptation = parseFloat(selectElement.value);
+    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
+                            * thisRoll.sizePriceAdaptation;
+    thisRoll.adjustedPrice = (Math.round(adjustedPrice * 100) / 100).toFixed(2); 
+
+    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
+}
+*/
+/*
+function packChange(selectElement, chosenRoll) {
+    let thisRoll=oldRollsArr[rollnum-1]; 
+    thisRoll.size = selectElement.options[selectElement.selectedIndex].text;
+    thisRoll.sizePriceAdaptation = parseFloat(selectElement.value);
+    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
+                            * thisRoll.sizePriceAdaptation;
+    thisRoll.adjustedPrice = (Math.round(adjustedPrice*100)/100).toFixed(2);
+    console.log(thisRoll.size);
+    console.log(thisRoll.sizePriceAdaptation);
+    console.log(thisRoll.adjustedPrice);
+    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
+}
+*/
+
+/* Record the current glazing option and update the total price */
+function glazingChange(selectElement) {
+    glazingPrice = parseFloat(selectElement.value); //update the default val
+    console.log(glazingPrice);
+    updateTotalPrice();
+  }
+
+/* Record the current pack option and update the total price */
+function packChange(selectElement) {
+    packPrice = parseFloat(selectElement.value); //update the default val
+    console.log(packPrice);
+    updateTotalPrice();
+}
+  
+function updateTotalPrice() {
+    basePrice = rolls[chosenRoll].basePrice
+    const totalPrice = (basePrice + glazingPrice) * packPrice;
+    const totalPriceField = document.getElementById("adjustedPriceShown");
+    totalPriceField.textContent = "$" + totalPrice.toFixed(2);
+}
+
+/* ------------------------ CART -------------------------- */
+const cart = [];

@@ -1,7 +1,7 @@
 const rolls = {
     "Original": {
         "basePrice": 2.49,
-        "imageFile": "original-cinnamon-roll.jpg"
+        "imageFile": "original-cinnamon-roll.jpg",
     },
     "Apple": {
         "basePrice": 3.49,
