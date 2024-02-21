@@ -2,14 +2,11 @@
 price = current price, could be updated */
 
 class Roll {
-    constructor (type, basePrice, glazing, size){
-        this.type = type;
+    constructor (rollType, rollGlazing, packSize, basePrice){
+        this.type = rollType;
+        this.glazing = rollGlazing;
+        this.size = packSize;
         this.basePrice = basePrice;
-        this.glazing = glazing;
-        this.glazingPriceAdaptation = 0;
-        this.size = size;
-        this.sizePriceAdaptation = size;
-        this.adjustedPrice = basePrice;
         //this.updateElement();
     }
         /*
@@ -22,20 +19,9 @@ class Roll {
     }
 */
 }
-
-/* initializing the Rolls */
-const roll1 = new Roll("originalRoll", 2.49, "keeporiginal", 1);
-const roll2 = new Roll("appleRoll", 3.49, "keeporiginal", 1);
-const roll3 = new Roll("raisinRoll", 2.99, "keeporiginal", 1);
-const roll4 = new Roll("walnutRoll", 3.49, "keeporiginal", 1);
-const roll5 = new Roll ("chocRoll", 3.99, "keeporiginal", 1);
-const roll6 = new Roll ("strawberryRoll", 2.49, "keeporiginal", 1);
-
-const oldRollsArr = [roll1, roll2, roll3, roll4, roll5, roll6];
-
 /* Setting some default values */
 let basePrice = 2.49;
-let glazingOption = "Keep original";
+let glazingOption = "Keep Original";
 let packOption = 1;
 let glazingPrice = 0;
 let packPrice = 1;
@@ -61,10 +47,10 @@ const glazingSelect = document.getElementById("glazing-options");
 
 for (const [glazingOption, priceAdaptation] of Object.entries(glazingPrices)) {
   const option = document.createElement("option");
-  console.log("option="+option)
+  //console.log("option="+option)
   option.textContent = glazingOption;
   option.value = priceAdaptation;
-  console.log("glazingSelect=" + glazingSelect)
+  //console.log("glazingSelect=" + glazingSelect)
   glazingSelect.appendChild(option);
   /* appendChild: adds a node to the end of the list of children 
                   of a specified parent node.*/
@@ -82,20 +68,19 @@ for (const [packOption, priceAdaptation] of Object.entries(packPrices)) {
 
 
 
-
 /* ------------------------ URL SEARCH PARAMS -------------------------- */
 
 // Get query string from URL. This is the list of params that begin with a ? mark. 
 const queryString = window.location.search;
-console.log("queryString = " + queryString);
+//console.log("queryString = " + queryString);
 
 //Use the query string to create a URLSearchParams object
 const params = new URLSearchParams(queryString);
-console.log("params = " + params);
+//console.log("params = " + params);
 
 //Access the param we want using "get" method 
 const chosenRoll = params.get('roll');
-console.log("chosenRoll = " + chosenRoll);
+//console.log("chosenRoll = " + chosenRoll);
 
 /* ------------------------ UPDATE HTML GIVEN URL PARAMS -------------------------- */
 
@@ -109,44 +94,20 @@ const priceHTML = document.querySelector('#adjustedPriceShown');
 priceHTML.innertext = "$" + rolls[chosenRoll].basePrice;
 
 /* ------------------------ COMPUTE UPDATED PRICE -------------------------- */
-/*
-function glazingChange(selectElement, chosenRoll) {
-    let thisRoll=oldRollsArr[rollnum-1]; 
-    thisRoll.glazing = selectElement.options[selectElement.selectedIndex].text;
-    thisRoll.glazingPriceAdaptation = parseFloat(selectElement.value);
-    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
-                            * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = (Math.round(adjustedPrice * 100) / 100).toFixed(2); 
-
-    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
-}
-*/
-/*
-function packChange(selectElement, chosenRoll) {
-    let thisRoll=oldRollsArr[rollnum-1]; 
-    thisRoll.size = selectElement.options[selectElement.selectedIndex].text;
-    thisRoll.sizePriceAdaptation = parseFloat(selectElement.value);
-    let adjustedPrice = (thisRoll.basePrice + thisRoll.glazingPriceAdaptation) 
-                            * thisRoll.sizePriceAdaptation;
-    thisRoll.adjustedPrice = (Math.round(adjustedPrice*100)/100).toFixed(2);
-    console.log(thisRoll.size);
-    console.log(thisRoll.sizePriceAdaptation);
-    console.log(thisRoll.adjustedPrice);
-    document.getElementById("adjustedPriceShown").innerHTML = "$" + thisRoll.adjustedPrice;
-}
-*/
 
 /* Record the current glazing option and update the total price */
 function glazingChange(selectElement) {
+    glazingOption = parseFloat(selectElement.textContent); //update the default val
     glazingPrice = parseFloat(selectElement.value); //update the default val
-    console.log(glazingPrice);
+    //console.log(glazingPrice);
     updateTotalPrice();
   }
 
 /* Record the current pack option and update the total price */
 function packChange(selectElement) {
+    packOption = parseFloat(selectElement.textContent); //update the default val
     packPrice = parseFloat(selectElement.value); //update the default val
-    console.log(packPrice);
+    //console.log(packPrice);
     updateTotalPrice();
 }
   
@@ -159,3 +120,18 @@ function updateTotalPrice() {
 
 /* ------------------------ CART -------------------------- */
 const cart = [];
+const formattedCartForConsole = [];
+
+function addToCart() {
+    let bp = rolls[chosenRoll].basePrice;
+    // glazingOption and packOption are global variables updated by the
+    // glazingChange and packChange functions.
+    let instance = new Roll("Original", glazingOption, packOption, bp);
+    cart.push(instance);
+
+    let formattedCartItem = JSON.stringify(instance, null, 4);
+    formattedCartForConsole.push(formattedCartItem);
+
+    console.log("Current cart items: " + formattedCartForConsole);
+}
+
