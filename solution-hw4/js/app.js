@@ -1,6 +1,5 @@
 /* (1) Create a Roll object that stores its type, price, glazing and pack options. 
 price = current price, could be updated */
-
 class Roll {
     constructor (rollType, rollGlazing, packSize, basePrice){
         this.type = rollType;
@@ -45,10 +44,10 @@ const packPrices = {
 /* (3.1) Populate glazing options with corresponding price adaptation values */
 const glazingSelect = document.getElementById("glazing-options");
 
-for (const [glazingOption, priceAdaptation] of Object.entries(glazingPrices)) {
+for (const [glzOption, priceAdaptation] of Object.entries(glazingPrices)) {
   const option = document.createElement("option");
   //console.log("option="+option)
-  option.textContent = glazingOption;
+  option.textContent = glzOption;
   option.value = priceAdaptation;
   //console.log("glazingSelect=" + glazingSelect)
   glazingSelect.appendChild(option);
@@ -59,9 +58,9 @@ for (const [glazingOption, priceAdaptation] of Object.entries(glazingPrices)) {
 /* (3.2) Populate pack options with corresponding price adaptation values */
 const packSelect = document.getElementById("pack-options");
 
-for (const [packOption, priceAdaptation] of Object.entries(packPrices)) {
+for (const [pkOption, priceAdaptation] of Object.entries(packPrices)) {
   const option = document.createElement("option");
-  option.textContent = packOption;
+  option.textContent = pkOption;
   option.value = priceAdaptation;
   packSelect.appendChild(option);
 }
@@ -85,7 +84,8 @@ const chosenRoll = params.get('roll');
 /* ------------------------ UPDATE HTML GIVEN URL PARAMS -------------------------- */
 
 const headerHTML = document.querySelector('#banner');
-headerHTML.innerText = chosenRoll + ' Cinnamon Roll';
+const bannerText = chosenRoll + ' Cinnamon Roll';
+headerHTML.innerText = bannerText;
 
 const imgHTML = document.querySelector('.product-image');
 imgHTML.src = "images/products/" + rolls[chosenRoll]["imageFile"];
@@ -97,17 +97,16 @@ priceHTML.innertext = "$" + rolls[chosenRoll].basePrice;
 
 /* Record the current glazing option and update the total price */
 function glazingChange(selectElement) {
-    glazingOption = parseFloat(selectElement.textContent); //update the default val
     glazingPrice = parseFloat(selectElement.value); //update the default val
-    //console.log(glazingPrice);
+    glazingOption = selectElement.options[selectElement.selectedIndex].textContent; //update the default val
     updateTotalPrice();
   }
 
 /* Record the current pack option and update the total price */
 function packChange(selectElement) {
-    packOption = parseFloat(selectElement.textContent); //update the default val
     packPrice = parseFloat(selectElement.value); //update the default val
-    //console.log(packPrice);
+    packOption = selectElement.options[selectElement.selectedIndex].textContent; //update the default val
+    console.log("packOption=" + packOption);
     updateTotalPrice();
 }
   
@@ -115,7 +114,8 @@ function updateTotalPrice() {
     basePrice = rolls[chosenRoll].basePrice
     const totalPrice = (basePrice + glazingPrice) * packPrice;
     const totalPriceField = document.getElementById("adjustedPriceShown");
-    totalPriceField.textContent = "$" + totalPrice.toFixed(2);
+    const roundedTotalPrice = totalPrice.toFixed(2)
+    totalPriceField.textContent = "$" + roundedTotalPrice;
 }
 
 /* ------------------------ CART -------------------------- */
@@ -126,7 +126,8 @@ function addToCart() {
     let bp = rolls[chosenRoll].basePrice;
     // glazingOption and packOption are global variables updated by the
     // glazingChange and packChange functions.
-    let instance = new Roll("Original", glazingOption, packOption, bp);
+    console.log("bannertext"+bannerText);
+    let instance = new Roll(bannerText, glazingOption, packOption, bp);
     cart.push(instance);
 
     let formattedCartItem = JSON.stringify(instance, null, 4);
