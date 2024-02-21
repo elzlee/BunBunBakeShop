@@ -106,7 +106,6 @@ function glazingChange(selectElement) {
 function packChange(selectElement) {
     packPrice = parseFloat(selectElement.value); //update the default val
     packOption = selectElement.options[selectElement.selectedIndex].textContent; //update the default val
-    console.log("packOption=" + packOption);
     updateTotalPrice();
 }
   
