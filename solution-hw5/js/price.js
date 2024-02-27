@@ -35,14 +35,19 @@ class Roll {
 	  }
 }
 
-let cartItem1 = new Roll('Original', 'Sugar milk', '1', rolls['Original']['basePrice']); //totalPrice = 2.49
-let cartItem2 = new Roll('Walnut', 'Vanilla milk', '12', rolls['Walnut']['basePrice']); //totalPrice = 39.90
-let cartItem3 = new Roll('Raisin', 'Sugar milk', '3', rolls['Raisin']['basePrice']); //totalPrice = 8.97
-let cartItem4 = new Roll('Apple', 'Original', '3', rolls['Apple']['basePrice']); //totalPrice = 10.47
+//Hard coding for HW5
+addCartItem('Original', 'Sugar milk', '1', rolls['Original']['basePrice']); //totalPrice = 2.49
+addCartItem('Walnut', 'Vanilla milk', '12', rolls['Walnut']['basePrice']); //totalPrice = 39.90
+addCartItem('Raisin', 'Sugar milk', '3', rolls['Raisin']['basePrice']); //totalPrice = 8.97
+addCartItem('Apple', 'Original', '3', rolls['Apple']['basePrice']); //totalPrice = 10.47
 
-cart.push(cartItem1, cartItem2, cartItem3, cartItem4);
 console.log("Current Cart Items: " + cart);
 
+function addCartItem(rollType, rollGlazing, packSize, basePrice) {
+    const cartItem = new Roll(rollType, rollGlazing, packSize, basePrice);
+    cart.push(cartItem);
+    return cartItem;
+}
 
 
 //--------------------- FUNCTIONS BELOW ---------------------------//
