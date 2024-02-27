@@ -2,7 +2,7 @@
 
 Deployed website: https://elzlee.github.io/BunBunBakeShop
 
-HW4: https://elzlee.github.io/BunBunBakeShop/solution-hw4/
+HW5: https://elzlee.github.io/BunBunBakeShop/solution-hw5/
 
 
 Repository link: https://github.com/elzlee/BunBunBakeShop
