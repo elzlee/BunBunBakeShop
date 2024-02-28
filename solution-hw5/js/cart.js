@@ -20,9 +20,11 @@ class Roll {
     }
 	get totalPrice() {
 		const glazingPrice = glazingPrices[this.glazing];
+        console.log("glazingPrice=" + glazingPrice)
 		const packPrice = packPrices[this.size];
-		const totalPrice = (this.basePrice + glazingPrice) * packPrice;
-		return totalPrice.toFixed(2);
+        console.log("packPrice=" + packPrice)
+        const totalPrice = (this.basePrice + glazingPrice) * packPrice;
+        return totalPrice.toFixed(2);
 	  }
 }
 
@@ -33,7 +35,7 @@ let mycart = []; //how to make price.js and cart.js update the same cart variabl
 addCartItem('Original', 'Sugar milk', '1', rolls['Original']['basePrice']); //totalPrice = 2.49
 addCartItem('Walnut', 'Vanilla milk', '12', rolls['Walnut']['basePrice']); //totalPrice = 39.90
 addCartItem('Raisin', 'Sugar milk', '3', rolls['Raisin']['basePrice']); //totalPrice = 8.97
-addCartItem('Apple', 'Original', '3', rolls['Apple']['basePrice']); //totalPrice = 10.47
+addCartItem('Apple', 'Keep original', '3', rolls['Apple']['basePrice']); //totalPrice = 10.47
 
 function addCartItem(rollType, rollGlazing, packSize, basePrice) {
     const cartItem = new Roll(rollType, rollGlazing, packSize, basePrice);
@@ -58,7 +60,7 @@ function createElement(item){
     item.element = clone.querySelector('.cart-item');
 
     const cartWrapperElement = document.querySelector('.cart-wrapper');
-    cartWrapperElement.prepend(item.element);
+    cartWrapperElement.append(item.element);
 
     updateElement(item);
 }
@@ -74,9 +76,9 @@ function updateElement(item){
     //add to DOM
     itemImageElement.src = "images/products/" + rolls[item.type]["imageFile"];
     itemDetailTypeElement.innerText = item.type + " Cinnamon Roll";
-    itemDetailGlazingElement.innerText = "Glazinng: " + item.glazing;
+    itemDetailGlazingElement.innerText = "Glazing: " + item.glazing;
     itemDetailSizeElement.innerText = "Pack Size: " + item.size;
-    itemPriceElement.innerText = rolls.totalPrice;
+    itemPriceElement.innerText = item.totalPrice; // Use item.totalPrice instead of rolls.totalPrice
 }
 
 //may not use this function bc i added a getter function in the Roll class
