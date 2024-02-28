@@ -20,9 +20,7 @@ class Roll {
     }
 	get totalPrice() {
 		const glazingPrice = glazingPrices[this.glazing];
-        console.log("glazingPrice=" + glazingPrice)
 		const packPrice = packPrices[this.size];
-        console.log("packPrice=" + packPrice)
         const totalPrice = (this.basePrice + glazingPrice) * packPrice;
         return totalPrice.toFixed(2);
 	  }
@@ -51,6 +49,9 @@ for (const item of mycart) {
 	createElement(item);
 }
 
+//update total cart price on DOM
+const cartTotalPriceElement = document.querySelector('.cart-total-price');
+cartTotalPriceElement.innerText = "$ " + calculateCartTotalPrice(mycart);
 
 //--------------------- FUNCTIONS BELOW ---------------------------//
 function createElement(item){
@@ -62,17 +63,17 @@ function createElement(item){
     const cartWrapperElement = document.querySelector('.cart-wrapper');
     cartWrapperElement.append(item.element);
 
-    updateElement(item);
+    updateCartElement(item);
 }
 
-function updateElement(item){
+function updateCartElement(item){
     //get refs to child elements
     const itemImageElement = item.element.querySelector('.product-image');
 	const itemDetailTypeElement = item.element.querySelector('.item-detail-type');
     const itemDetailGlazingElement = item.element.querySelector('.item-detail-glazing');
 	const itemDetailSizeElement = item.element.querySelector('.item-detail-size');
 	const itemPriceElement = item.element.querySelector('.item-price');
-
+    
     //add to DOM
     itemImageElement.src = "images/products/" + rolls[item.type]["imageFile"];
     itemDetailTypeElement.innerText = item.type + " Cinnamon Roll";
@@ -81,6 +82,13 @@ function updateElement(item){
     itemPriceElement.innerText = item.totalPrice; // Use item.totalPrice instead of rolls.totalPrice
 }
 
+function calculateCartTotalPrice(mycart){
+    let cartTotalPrice = 0;
+    for (const item of mycart) {
+        cartTotalPrice += parseFloat(item.totalPrice);
+    }
+    return cartTotalPrice.toFixed(2); 
+}
 //may not use this function bc i added a getter function in the Roll class
 function totalPriceCalculator(roll) {
 	let glazingOption = roll.glazing;
