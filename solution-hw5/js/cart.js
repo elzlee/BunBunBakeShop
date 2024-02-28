@@ -26,7 +26,7 @@ class Roll {
 	  }
 }
 
-let mycart = []; //how to make price.js and cart.js update the same cart variable?
+let mycart = new Set(); //how to make price.js and cart.js update the same cart variable?
 //let window.cart = []; // creates a global variable cart
 
 //Hard coding for HW5
@@ -37,7 +37,7 @@ addCartItem('Apple', 'Keep original', '3', rolls['Apple']['basePrice']); //total
 
 function addCartItem(rollType, rollGlazing, packSize, basePrice) {
     const cartItem = new Roll(rollType, rollGlazing, packSize, basePrice);
-    mycart.push(cartItem);
+    mycart.add(cartItem);
     return cartItem;
 }
 
@@ -49,9 +49,6 @@ for (const item of mycart) {
 	createElement(item);
 }
 
-//update total cart price on DOM
-const cartTotalPriceElement = document.querySelector('.cart-total-price');
-cartTotalPriceElement.innerText = "$ " + calculateCartTotalPrice(mycart);
 
 //--------------------- FUNCTIONS BELOW ---------------------------//
 function createElement(item){
@@ -60,8 +57,18 @@ function createElement(item){
     const clone = template.content.cloneNode(true);
     item.element = clone.querySelector('.cart-item');
 
+    const btnRemove = item.element.querySelector('.remove');
+    console.log(btnRemove);
+    btnRemove.addEventListener('click', () => {
+        removeItem(item);
+    });
+
     const cartWrapperElement = document.querySelector('.cart-wrapper');
     cartWrapperElement.append(item.element);
+
+    //update total cart price on DOM
+    const cartTotalPriceElement = document.querySelector('.cart-total-price');
+    cartTotalPriceElement.innerText = "$ " + calculateCartTotalPrice(mycart);
 
     updateCartElement(item);
 }
@@ -97,4 +104,14 @@ function totalPriceCalculator(roll) {
 	const packPrice = packPrices[packOption];
 	const totalPrice = (basePrice + glazingPrice) * packPrice;
 	return totalPrice.toFixed(2);
+}
+
+function removeItem(item){
+    item.element.remove(); //remove graphical element from DOM
+    mycart.delete(item); // remove the data too!
+
+    //update total cart price on DOM
+    const cartTotalPriceElement = document.querySelector('.cart-total-price');
+    cartTotalPriceElement.innerText = "$ " + calculateCartTotalPrice(mycart);
+
 }
