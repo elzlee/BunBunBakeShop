@@ -14,6 +14,7 @@ let packOption = 1;
 let basePrice = 0;
 let rollType = NaN;
 let cart = [];
+//let window.cart = []; // creates a global variable cart
 
 populateCinnamonData();
 populateSelectOptions();
@@ -35,35 +36,13 @@ class Roll {
 	  }
 }
 
-//Hard coding for HW5
-addCartItem('Original', 'Sugar milk', '1', rolls['Original']['basePrice']); //totalPrice = 2.49
-addCartItem('Walnut', 'Vanilla milk', '12', rolls['Walnut']['basePrice']); //totalPrice = 39.90
-addCartItem('Raisin', 'Sugar milk', '3', rolls['Raisin']['basePrice']); //totalPrice = 8.97
-addCartItem('Apple', 'Original', '3', rolls['Apple']['basePrice']); //totalPrice = 10.47
-
-console.log("Current Cart Items: " + cart);
-
-function addCartItem(rollType, rollGlazing, packSize, basePrice) {
-    const cartItem = new Roll(rollType, rollGlazing, packSize, basePrice);
-    cart.push(cartItem);
-    return cartItem;
-}
-
 
 //--------------------- FUNCTIONS BELOW ---------------------------//
-//may not use this function bc i added a getter function in the Roll class
-function totalPriceCalculator(roll) {
-	let glazingOption = roll.glazing;
-	let packOption = roll.size;
-	const glazingPrice = glazingPrices[glazingOption];
-	const packPrice = packPrices[packOption];
-	const totalPrice = (basePrice + glazingPrice) * packPrice;
-	return totalPrice.toFixed(2);
-}
+
 
 function populateCinnamonData() {
 	const params = new URLSearchParams(window.location.search);
-	rollType = params.get("roll");
+	let rollType = params.get("roll");
 	const imagePath = "images/products/" + rolls[rollType]["imageFile"];
 	const price = rolls[rollType]["basePrice"];
 
